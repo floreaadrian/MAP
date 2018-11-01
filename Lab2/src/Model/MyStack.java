@@ -1,18 +1,24 @@
 package Model;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyStack<T> implements MyIStack<T> {
-    private Vector<T> stack = new Vector<>(); //a field whose type Type is an appropriate generic java library //collection
+    private List<T> stack = new ArrayList<>(); //a field whose type Type is an appropriate generic java library //collection
 
     public MyStack() {
     }
 
     @Override
     public T pop() {
-        T elemToReturn = this.stack.lastElement();
-        this.stack.removeElementAt(this.stack.size() - 1);
+        T elemToReturn = this.stack.get(this.stack.size()-1);
+        this.stack.remove(this.stack.size() - 1);
         return elemToReturn;
+    }
+
+    @Override
+    public void clear() {
+        this.stack.clear();
     }
 
     @Override
@@ -28,11 +34,9 @@ public class MyStack<T> implements MyIStack<T> {
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder("[ ");
+        StringBuilder res = new StringBuilder();
         int size = this.stack.size() - 1;
-        for (int index = size; index >= 0; index--) res.append(this.stack.get(index).toString()).append(",");
-        res.setLength(res.length() - 1);
-        res.append(" ]");
+        for (int index = size; index >= 0; index--) res.append(this.stack.get(index).toString()).append("\n");
         return res.toString();
     }
 }

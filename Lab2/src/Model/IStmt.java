@@ -1,9 +1,9 @@
 package Model;
 
-import Exceptions.DivisionByZero;
-import Exceptions.OperatorNotFound;
-import Exceptions.VariableNotFound;
+import Exceptions.*;
+
+import java.io.IOException;
 
 public interface IStmt {
-    PrgState execute(PrgState state) throws DivisionByZero, VariableNotFound, OperatorNotFound;
+    PrgState execute(PrgState state) throws DivisionByZero, VariableNotFound, OperatorNotFound, FileAlreadyUsed, FileDoesntExist, IOException, FileNotOpened;
 }

@@ -1,9 +1,11 @@
 package Model;
 
-import java.util.Vector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyList<T> implements MyIList<T> {
-    private Vector<T> list = new Vector<>();
+    private List<T> list = new ArrayList<>();
 
     public MyList() {
     }
@@ -18,10 +20,20 @@ public class MyList<T> implements MyIList<T> {
     }
 
 
-
     @Override
     public String toString() {
-        return this.list.toString();
+        if (this.list.isEmpty())
+            return "";
+        StringBuilder res = new StringBuilder();
+        for (T elem : this.list)
+            res.append(elem).append("\n");
+
+        return res.toString();
+    }
+
+    @Override
+    public void clear() {
+        this.list.clear();
     }
 
 }

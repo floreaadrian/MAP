@@ -5,7 +5,7 @@ import Exceptions.*;
 public class PrintStmt implements IStmt {
     private Exp exp;
 
-    public PrintStmt(VarExp v) {
+    public PrintStmt(Exp v) {
         this.exp = v;
     }
 

@@ -2,6 +2,7 @@ package View;
 
 import Model.*;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -35,7 +36,12 @@ class TextMenu {
                 System.out.println("Invalid Option");
                 continue;
             }
-            com.execute();
+            try {
+                com.execute();
+            } catch (FileNotFoundException e) {
+                e.getStackTrace();
+            }
+
         }
     }
 }

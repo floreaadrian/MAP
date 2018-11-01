@@ -1,0 +1,150 @@
+Id: 4
+ExeStack:
+(openRFile(var_f,"/Users/adrianflorea/Codes/Java/Lab2/test.in"); (readFile(var_f,var_c); (print(var_c); (IF(var_c) THEN ((readFile(var_f,var_c); print(var_c)) ) ELSE (print(0)); closeRFile(var_f)) ) ) ) 
+SymTable:
+Out:
+
+File Table:
+
+Id: 4
+ExeStack:
+openRFile(var_f,"/Users/adrianflorea/Codes/Java/Lab2/test.in")
+(readFile(var_f,var_c); (print(var_c); (IF(var_c) THEN ((readFile(var_f,var_c); print(var_c)) ) ELSE (print(0)); closeRFile(var_f)) ) ) 
+SymTable:
+Out:
+
+File Table:
+
+Id: 4
+ExeStack:
+(readFile(var_f,var_c); (print(var_c); (IF(var_c) THEN ((readFile(var_f,var_c); print(var_c)) ) ELSE (print(0)); closeRFile(var_f)) ) ) 
+SymTable:
+var_f --> 1
+Out:
+
+File Table:
+1 --> /Users/adrianflorea/Codes/Java/Lab2/test.in
+
+Id: 4
+ExeStack:
+readFile(var_f,var_c)
+(print(var_c); (IF(var_c) THEN ((readFile(var_f,var_c); print(var_c)) ) ELSE (print(0)); closeRFile(var_f)) ) 
+SymTable:
+var_f --> 1
+Out:
+
+File Table:
+1 --> /Users/adrianflorea/Codes/Java/Lab2/test.in
+
+Id: 4
+ExeStack:
+(print(var_c); (IF(var_c) THEN ((readFile(var_f,var_c); print(var_c)) ) ELSE (print(0)); closeRFile(var_f)) ) 
+SymTable:
+var_f --> 1
+var_c --> 32
+Out:
+
+File Table:
+1 --> /Users/adrianflorea/Codes/Java/Lab2/test.in
+
+Id: 4
+ExeStack:
+print(var_c)
+(IF(var_c) THEN ((readFile(var_f,var_c); print(var_c)) ) ELSE (print(0)); closeRFile(var_f)) 
+SymTable:
+var_f --> 1
+var_c --> 32
+Out:
+
+File Table:
+1 --> /Users/adrianflorea/Codes/Java/Lab2/test.in
+
+Id: 4
+ExeStack:
+(IF(var_c) THEN ((readFile(var_f,var_c); print(var_c)) ) ELSE (print(0)); closeRFile(var_f)) 
+SymTable:
+var_f --> 1
+var_c --> 32
+Out:
+32
+
+File Table:
+1 --> /Users/adrianflorea/Codes/Java/Lab2/test.in
+
+Id: 4
+ExeStack:
+IF(var_c) THEN ((readFile(var_f,var_c); print(var_c)) ) ELSE (print(0))
+closeRFile(var_f)
+SymTable:
+var_f --> 1
+var_c --> 32
+Out:
+32
+
+File Table:
+1 --> /Users/adrianflorea/Codes/Java/Lab2/test.in
+
+Id: 4
+ExeStack:
+(readFile(var_f,var_c); print(var_c)) 
+closeRFile(var_f)
+SymTable:
+var_f --> 1
+var_c --> 32
+Out:
+32
+
+File Table:
+1 --> /Users/adrianflorea/Codes/Java/Lab2/test.in
+
+Id: 4
+ExeStack:
+readFile(var_f,var_c)
+print(var_c)
+closeRFile(var_f)
+SymTable:
+var_f --> 1
+var_c --> 32
+Out:
+32
+
+File Table:
+1 --> /Users/adrianflorea/Codes/Java/Lab2/test.in
+
+Id: 4
+ExeStack:
+print(var_c)
+closeRFile(var_f)
+SymTable:
+var_f --> 1
+var_c --> 0
+Out:
+32
+
+File Table:
+1 --> /Users/adrianflorea/Codes/Java/Lab2/test.in
+
+Id: 4
+ExeStack:
+closeRFile(var_f)
+SymTable:
+var_f --> 1
+var_c --> 0
+Out:
+32
+0
+
+File Table:
+1 --> /Users/adrianflorea/Codes/Java/Lab2/test.in
+
+Id: 4
+ExeStack:
+SymTable:
+var_f --> 1
+var_c --> 0
+Out:
+32
+0
+
+File Table:
+
