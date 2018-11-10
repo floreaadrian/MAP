@@ -1,0 +1,188 @@
+
+Id: 9
+ExeStack:
+(v=10; (newStmt(v, 20); (newStmt(a, 22); (wh(a,30); (print(a); (print(rH(a)); a=0) ) ) ) ) ) 
+SymTable:
+Heap:
+File Table:
+Out:
+
+---------------
+
+Id: 9
+ExeStack:
+v=10
+(newStmt(v, 20); (newStmt(a, 22); (wh(a,30); (print(a); (print(rH(a)); a=0) ) ) ) ) 
+SymTable:
+Heap:
+File Table:
+Out:
+
+---------------
+
+Id: 9
+ExeStack:
+(newStmt(v, 20); (newStmt(a, 22); (wh(a,30); (print(a); (print(rH(a)); a=0) ) ) ) ) 
+SymTable:
+v --> 10
+Heap:
+File Table:
+Out:
+
+---------------
+
+Id: 9
+ExeStack:
+newStmt(v, 20)
+(newStmt(a, 22); (wh(a,30); (print(a); (print(rH(a)); a=0) ) ) ) 
+SymTable:
+v --> 10
+Heap:
+File Table:
+Out:
+
+---------------
+
+Id: 9
+ExeStack:
+(newStmt(a, 22); (wh(a,30); (print(a); (print(rH(a)); a=0) ) ) ) 
+SymTable:
+v --> 1
+Heap:
+1 --> 20
+File Table:
+Out:
+
+---------------
+
+Id: 9
+ExeStack:
+newStmt(a, 22)
+(wh(a,30); (print(a); (print(rH(a)); a=0) ) ) 
+SymTable:
+v --> 1
+Heap:
+1 --> 20
+File Table:
+Out:
+
+---------------
+
+Id: 9
+ExeStack:
+(wh(a,30); (print(a); (print(rH(a)); a=0) ) ) 
+SymTable:
+a --> 2
+v --> 1
+Heap:
+1 --> 20
+2 --> 22
+File Table:
+Out:
+
+---------------
+
+Id: 9
+ExeStack:
+wh(a,30)
+(print(a); (print(rH(a)); a=0) ) 
+SymTable:
+a --> 2
+v --> 1
+Heap:
+1 --> 20
+2 --> 22
+File Table:
+Out:
+
+---------------
+
+Id: 9
+ExeStack:
+(print(a); (print(rH(a)); a=0) ) 
+SymTable:
+a --> 2
+v --> 1
+Heap:
+1 --> 20
+2 --> 30
+File Table:
+Out:
+
+---------------
+
+Id: 9
+ExeStack:
+print(a)
+(print(rH(a)); a=0) 
+SymTable:
+a --> 2
+v --> 1
+Heap:
+1 --> 20
+2 --> 30
+File Table:
+Out:
+
+---------------
+
+Id: 9
+ExeStack:
+(print(rH(a)); a=0) 
+SymTable:
+a --> 2
+v --> 1
+Heap:
+1 --> 20
+2 --> 30
+File Table:
+Out:
+2
+
+---------------
+
+Id: 9
+ExeStack:
+print(rH(a))
+a=0
+SymTable:
+a --> 2
+v --> 1
+Heap:
+1 --> 20
+2 --> 30
+File Table:
+Out:
+2
+
+---------------
+
+Id: 9
+ExeStack:
+a=0
+SymTable:
+a --> 2
+v --> 1
+Heap:
+1 --> 20
+2 --> 30
+File Table:
+Out:
+2
+30
+
+---------------
+
+Id: 9
+ExeStack:
+SymTable:
+a --> 0
+v --> 1
+Heap:
+1 --> 20
+File Table:
+Out:
+2
+30
+
+---------------
