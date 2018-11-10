@@ -5,6 +5,9 @@ import Model.*;
 import Repository.IRepository;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public class Controller {
@@ -13,6 +16,12 @@ public class Controller {
     public Controller(IRepository e) {
         this.repo = e;
     }
+
+    private Map<Integer,Integer> conservativeGarbageCollector(Collection<Integer> symTableValues,
+                                                              Map<Integer, Integer> heap){
+        return heap.entrySet().stream()
+                .filter(e->symTableValues.contains(e.getKey()))
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));}
 
     private void oneStep(PrgState state) throws MyStmtExecException, DivisionByZero, VariableNotFound, OperatorNotFound, IOException, FileDoesntExist, FileAlreadyUsed, FileNotOpened {
         MyIStack<IStmt> stk = state.getStk();
@@ -30,6 +39,9 @@ public class Controller {
         this.repo.logPrgStateExec();
         while (!prg.getStk().isEmpty()) {
             oneStep(prg);
+            prg.getHeap().setContent(conservativeGarbageCollector(
+                    prg.getSymTable().getContent().values(),
+                    prg.getHeap().getContent()));
             this.repo.logPrgStateExec();
 //            System.out.println(prg);
         }

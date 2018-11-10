@@ -10,7 +10,7 @@ public class VarExp extends Exp {
     }
 
 
-    int eval(MyIDictionary<String, Integer> tbl) throws VariableNotFound {
+    int eval(MyIDictionary<String, Integer> tbl,MyIDictionary<Integer,Integer> heap) throws VariableNotFound {
         if(!tbl.isDefined(id)) throw new VariableNotFound();
         return tbl.lookup(id);
     }

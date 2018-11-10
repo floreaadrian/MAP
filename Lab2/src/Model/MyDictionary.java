@@ -3,6 +3,7 @@ package Model;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MyDictionary<Key, Value> implements MyIDictionary<Key, Value> {
     private HashMap<Key, Value> dictionary = new HashMap<>();
@@ -49,16 +50,31 @@ public class MyDictionary<Key, Value> implements MyIDictionary<Key, Value> {
     }
 
     @Override
+    public Collection<Key> keys() {
+        return this.dictionary.keySet();
+    }
+
+    @Override
+    public Map<Key, Value> getContent() {
+        return this.dictionary;
+    }
+
+    @Override
+    public void setContent(Map<Key, Value> content) {
+        this.dictionary = (HashMap<Key, Value>) content;
+    }
+
+    @Override
     public String toString() {
         if (this.dictionary.isEmpty())
             return "";
         StringBuilder res = new StringBuilder();
-        for (HashMap.Entry<Key, Value> entry : this.dictionary.entrySet()) {
+        for (HashMap.Entry<Key, Value> entry : this.dictionary.entrySet())
             if (entry.getValue() instanceof Tuple)
                 res.append(entry.getKey()).append(" --> ").append(((Tuple) entry.getValue()).getFirst()).append("\n");
             else
                 res.append(entry.getKey()).append(" --> ").append(entry.getValue()).append("\n");
-        }
+
         return res.toString();
     }
 }

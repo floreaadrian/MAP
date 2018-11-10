@@ -15,10 +15,10 @@ public class ArithExp extends Exp {
     }
 
     //override
-    int eval(MyIDictionary<String, Integer> tbl) throws DivisionByZero, VariableNotFound, OperatorNotFound {
+    int eval(MyIDictionary<String, Integer> tbl,MyIDictionary<Integer,Integer> heap) throws DivisionByZero, VariableNotFound, OperatorNotFound {
         int finalResult;
-        int rez1 = this.firstExp.eval(tbl);
-        int rez2 = this.sndExp.eval(tbl);
+        int rez1 = this.firstExp.eval(tbl,heap);
+        int rez2 = this.sndExp.eval(tbl,heap);
         switch (op) {
             case "+":
                 finalResult = rez1 + rez2;

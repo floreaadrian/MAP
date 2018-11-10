@@ -1,12 +1,14 @@
 package Model;
 
 import java.io.*;
+import java.util.Collections;
 
 public class PrgState {
     private MyIStack<IStmt> exeStack;
     private MyIDictionary<String, Integer> symTable;
     private MyIList<Integer> out;
     private MyIDictionary<Integer, ITuple<String, BufferedReader>> fileTable;
+    private MyIDictionary<Integer, Integer> heap;
     private IStmt originalProgramState;
     private int id;
 
@@ -15,16 +17,20 @@ public class PrgState {
         this.symTable.clear();
         this.out.clear();
         this.fileTable.clear();
+        this.heap.clear();
         this.exeStack.push(this.originalProgramState);
     }
 
-    public PrgState(MyIStack<IStmt> stk, MyIDictionary<String, Integer> symtbl, MyIList<Integer> ot, MyIDictionary<Integer, ITuple<String, BufferedReader>> fileTable, IStmt prg, int id) {
+    public PrgState(MyIStack<IStmt> stk, MyIDictionary<String, Integer> symtbl, MyIList<Integer> ot,
+                    MyIDictionary<Integer, ITuple<String, BufferedReader>> fileTable, MyIDictionary<Integer, Integer> heap,
+                    IStmt prg, int id) {
         this.exeStack = stk;
         this.symTable = symtbl;
         this.out = ot;
         this.id = id;
         this.originalProgramState = prg;
         this.fileTable = fileTable;
+        this.heap = heap;
         stk.push(prg);
     }
 
@@ -32,7 +38,7 @@ public class PrgState {
         return this.exeStack;
     }
 
-    MyIDictionary<String, Integer> getSymTable() {
+    public MyIDictionary<String, Integer> getSymTable() {
         return this.symTable;
     }
 
@@ -44,10 +50,18 @@ public class PrgState {
         return this.fileTable;
     }
 
+    public MyIDictionary<Integer, Integer> getHeap() {
+        return this.heap;
+    }
 
     @Override
     public String toString() {
-        return "Id: " + this.id + "\nExeStack:\n" + this.exeStack.toString() + "SymTable:\n" + this.symTable.toString() + "Out:\n"
-                + this.out.toString() + "\nFile Table:\n" + this.fileTable.toString() + "\n";
+        return "\nId: " + this.id + "\nExeStack:\n" + this.exeStack.toString() + "SymTable:\n" + this.symTable.toString()
+                + "Heap:\n" + this.heap.toString() + "File Table:\n" + this.fileTable.toString()
+                + "Out:\n" + this.out.toString() + "\n" + multipleLines() + "\n";
+    }
+
+    private String multipleLines() {
+        return String.join("", Collections.nCopies(15, "-"));
     }
 }
