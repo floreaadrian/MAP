@@ -1,7 +1,7 @@
 
-Id: 9
+Id: 12
 ExeStack:
-(v=10; (newStmt(v, 20); (newStmt(a, 22); (wh(a,30); (print(a); (print(rH(a)); a=0) ) ) ) ) ) 
+(v=6; ( (while (comp(v-4>0)) (print(v); v=v-1) ); print(v)) ) 
 SymTable:
 Heap:
 File Table:
@@ -9,10 +9,10 @@ Out:
 
 ---------------
 
-Id: 9
+Id: 12
 ExeStack:
-v=10
-(newStmt(v, 20); (newStmt(a, 22); (wh(a,30); (print(a); (print(rH(a)); a=0) ) ) ) ) 
+v=6
+( (while (comp(v-4>0)) (print(v); v=v-1) ); print(v)) 
 SymTable:
 Heap:
 File Table:
@@ -20,169 +20,163 @@ Out:
 
 ---------------
 
-Id: 9
+Id: 12
 ExeStack:
-(newStmt(v, 20); (newStmt(a, 22); (wh(a,30); (print(a); (print(rH(a)); a=0) ) ) ) ) 
+( (while (comp(v-4>0)) (print(v); v=v-1) ); print(v)) 
 SymTable:
-v --> 10
+v --> 6
 Heap:
 File Table:
 Out:
 
 ---------------
 
-Id: 9
+Id: 12
 ExeStack:
-newStmt(v, 20)
-(newStmt(a, 22); (wh(a,30); (print(a); (print(rH(a)); a=0) ) ) ) 
+ (while (comp(v-4>0)) (print(v); v=v-1) )
+print(v)
 SymTable:
-v --> 10
+v --> 6
 Heap:
 File Table:
 Out:
 
 ---------------
 
-Id: 9
+Id: 12
 ExeStack:
-(newStmt(a, 22); (wh(a,30); (print(a); (print(rH(a)); a=0) ) ) ) 
+(print(v); v=v-1) 
+ (while (comp(v-4>0)) (print(v); v=v-1) )
+print(v)
 SymTable:
-v --> 1
+v --> 6
 Heap:
-1 --> 20
 File Table:
 Out:
 
 ---------------
 
-Id: 9
+Id: 12
 ExeStack:
-newStmt(a, 22)
-(wh(a,30); (print(a); (print(rH(a)); a=0) ) ) 
+print(v)
+v=v-1
+ (while (comp(v-4>0)) (print(v); v=v-1) )
+print(v)
 SymTable:
-v --> 1
+v --> 6
 Heap:
-1 --> 20
 File Table:
 Out:
 
 ---------------
 
-Id: 9
+Id: 12
 ExeStack:
-(wh(a,30); (print(a); (print(rH(a)); a=0) ) ) 
+v=v-1
+ (while (comp(v-4>0)) (print(v); v=v-1) )
+print(v)
 SymTable:
-a --> 2
-v --> 1
+v --> 6
 Heap:
-1 --> 20
-2 --> 22
 File Table:
 Out:
+6
 
 ---------------
 
-Id: 9
+Id: 12
 ExeStack:
-wh(a,30)
-(print(a); (print(rH(a)); a=0) ) 
+ (while (comp(v-4>0)) (print(v); v=v-1) )
+print(v)
 SymTable:
-a --> 2
-v --> 1
+v --> 5
 Heap:
-1 --> 20
-2 --> 22
 File Table:
 Out:
+6
 
 ---------------
 
-Id: 9
+Id: 12
 ExeStack:
-(print(a); (print(rH(a)); a=0) ) 
+(print(v); v=v-1) 
+ (while (comp(v-4>0)) (print(v); v=v-1) )
+print(v)
 SymTable:
-a --> 2
-v --> 1
+v --> 5
 Heap:
-1 --> 20
-2 --> 30
 File Table:
 Out:
+6
 
 ---------------
 
-Id: 9
+Id: 12
 ExeStack:
-print(a)
-(print(rH(a)); a=0) 
+print(v)
+v=v-1
+ (while (comp(v-4>0)) (print(v); v=v-1) )
+print(v)
 SymTable:
-a --> 2
-v --> 1
+v --> 5
 Heap:
-1 --> 20
-2 --> 30
 File Table:
 Out:
+6
 
 ---------------
 
-Id: 9
+Id: 12
 ExeStack:
-(print(rH(a)); a=0) 
+v=v-1
+ (while (comp(v-4>0)) (print(v); v=v-1) )
+print(v)
 SymTable:
-a --> 2
-v --> 1
+v --> 5
 Heap:
-1 --> 20
-2 --> 30
 File Table:
 Out:
-2
+6
+5
 
 ---------------
 
-Id: 9
+Id: 12
 ExeStack:
-print(rH(a))
-a=0
+ (while (comp(v-4>0)) (print(v); v=v-1) )
+print(v)
 SymTable:
-a --> 2
-v --> 1
+v --> 4
 Heap:
-1 --> 20
-2 --> 30
 File Table:
 Out:
-2
+6
+5
 
 ---------------
 
-Id: 9
+Id: 12
 ExeStack:
-a=0
+print(v)
 SymTable:
-a --> 2
-v --> 1
+v --> 4
 Heap:
-1 --> 20
-2 --> 30
 File Table:
 Out:
-2
-30
+6
+5
 
 ---------------
 
-Id: 9
+Id: 12
 ExeStack:
 SymTable:
-a --> 0
-v --> 1
+v --> 4
 Heap:
-1 --> 20
 File Table:
 Out:
-2
-30
+6
+5
+4
 
 ---------------

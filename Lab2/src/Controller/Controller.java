@@ -4,6 +4,7 @@ import Exceptions.*;
 import Model.*;
 import Repository.IRepository;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
@@ -43,9 +44,16 @@ public class Controller {
                     prg.getSymTable().getContent().values(),
                     prg.getHeap().getContent()));
             this.repo.logPrgStateExec();
-//            System.out.println(prg);
         }
+        prg.getFileTable().setContent(closeFiles(
+                prg.getSymTable().getContent().values(),
+                prg.getFileTable().getContent()));
     }
+
+    private Map<Integer, ITuple<String, BufferedReader>> closeFiles(Collection<Integer> values, Map<Integer, ITuple<String, BufferedReader>> content) {
+        return null;
+    }
+
     public String getFilePath(){
         return this.repo.getFilePath();
     }

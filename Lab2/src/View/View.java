@@ -105,6 +105,27 @@ public class View {
                                         new AssignStmt("a", new ConstExp(0))))))));
         Controller ctr9 = createController(ex9, 9);
 
+        //10 + (2<6) evaluates to 11
+
+        IStmt ex10 = new CompStmt(new AssignStmt("a",
+                new ArithExp("+",new ConstExp(10),new BoolExp("<",new ConstExp(2),
+                        new ConstExp(6)))), new PrintStmt(new VarExp("a")));
+        Controller ctr10 = createController(ex10, 10);
+
+        // (10+2)<6
+        IStmt ex11 = new PrintStmt(new BoolExp("<",
+                new ArithExp("+",new ConstExp(10),new ConstExp(2)),new ConstExp(2)));
+        Controller ctr11 = createController(ex11, 11);
+
+        //v=6; (while (v-4) print(v);v=v-1);print(v)
+        IStmt ex12 = new CompStmt(new AssignStmt("v",new ConstExp(6)),
+                new CompStmt(new WhileStmt(new BoolExp(">",new ArithExp("-",new VarExp("v"),new ConstExp(4)),new ConstExp(0)),
+                        new CompStmt(new PrintStmt(new VarExp("v")),
+                                new AssignStmt("v",new ArithExp("-",new VarExp("v"),new ConstExp(1))))),
+                        new PrintStmt(new VarExp("v")))
+                );
+        Controller ctr12 = createController(ex12, 12);
+
         menu.addCommand(new ExitCommand("0", "exit"));
         menu.addCommand(new RunExample("1", ex1.toString(), ctr1));
         menu.addCommand(new RunExample("2", ex2.toString(), ctr2));
@@ -115,6 +136,9 @@ public class View {
         menu.addCommand(new RunExample("7", ex7.toString(), ctr7));
         menu.addCommand(new RunExample("8", ex8.toString(), ctr8));
         menu.addCommand(new RunExample("9", ex9.toString(), ctr9));
+        menu.addCommand(new RunExample("10", ex10.toString(), ctr10));
+        menu.addCommand(new RunExample("11", ex11.toString(), ctr11));
+        menu.addCommand(new RunExample("12", ex12.toString(), ctr12));
         menu.show();
     }
 }

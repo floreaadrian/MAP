@@ -46,7 +46,7 @@ public class PrgState {
         return this.out;
     }
 
-    MyIDictionary<Integer, ITuple<String, BufferedReader>> getFileTable() {
+    public MyIDictionary<Integer, ITuple<String, BufferedReader>> getFileTable() {
         return this.fileTable;
     }
 
