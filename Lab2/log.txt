@@ -46,6 +46,7 @@ Out:
 Id: 12
 ExeStack:
 (print(v); v=v-1) 
+(print(v); v=v-1) 
  (while (comp(v-4>0)) (print(v); v=v-1) )
 print(v)
 SymTable:
@@ -60,6 +61,7 @@ Id: 12
 ExeStack:
 print(v)
 v=v-1
+(print(v); v=v-1) 
  (while (comp(v-4>0)) (print(v); v=v-1) )
 print(v)
 SymTable:
@@ -73,23 +75,11 @@ Out:
 Id: 12
 ExeStack:
 v=v-1
+(print(v); v=v-1) 
  (while (comp(v-4>0)) (print(v); v=v-1) )
 print(v)
 SymTable:
 v --> 6
-Heap:
-File Table:
-Out:
-6
-
----------------
-
-Id: 12
-ExeStack:
- (while (comp(v-4>0)) (print(v); v=v-1) )
-print(v)
-SymTable:
-v --> 5
 Heap:
 File Table:
 Out:

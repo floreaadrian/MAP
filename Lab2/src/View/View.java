@@ -126,6 +126,10 @@ public class View {
                 );
         Controller ctr12 = createController(ex12, 12);
 
+        IStmt ex13 = new OpenRFileStmt("var","/Users/adrianflorea/Codes/Java/Lab2/test.in",generator);
+        Controller ctr13 = createController(ex13,13);
+
+
         menu.addCommand(new ExitCommand("0", "exit"));
         menu.addCommand(new RunExample("1", ex1.toString(), ctr1));
         menu.addCommand(new RunExample("2", ex2.toString(), ctr2));
@@ -139,6 +143,7 @@ public class View {
         menu.addCommand(new RunExample("10", ex10.toString(), ctr10));
         menu.addCommand(new RunExample("11", ex11.toString(), ctr11));
         menu.addCommand(new RunExample("12", ex12.toString(), ctr12));
+        menu.addCommand(new RunExample("13", ex13.toString(), ctr13));
         menu.show();
     }
 }

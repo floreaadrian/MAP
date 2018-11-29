@@ -10,11 +10,11 @@ public interface MyIDictionary<Key,Value>  {
 
     void update(Key id, Value val);
     Collection<Value> values();
+    Collection<Key> keys();
     Value lookup(Key id);
 
     void delete(Key id);
     void clear();
-    Collection<Key> keys();
     Map<Key,Value> getContent();
     void setContent(Map<Key,Value> content);
     String toString();

@@ -20,6 +20,11 @@ public class Tuple<T1,T2> implements ITuple<T1,T2> {
     }
 
     @Override
+    public boolean verifyString(String toVerify) {
+        return false;
+    }
+
+    @Override
     public String toString(){
         return "<" + first.toString() + ", " +second.toString() + ">";
     }

@@ -18,11 +18,12 @@ public class Controller {
         this.repo = e;
     }
 
-    private Map<Integer,Integer> conservativeGarbageCollector(Collection<Integer> symTableValues,
-                                                              Map<Integer, Integer> heap){
+    private Map<Integer, Integer> conservativeGarbageCollector(Collection<Integer> symTableValues,
+                                                               Map<Integer, Integer> heap) {
         return heap.entrySet().stream()
-                .filter(e->symTableValues.contains(e.getKey()))
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));}
+                .filter(e -> symTableValues.contains(e.getKey()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
 
     private void oneStep(PrgState state) throws MyStmtExecException, DivisionByZero, VariableNotFound, OperatorNotFound, IOException, FileDoesntExist, FileAlreadyUsed, FileNotOpened {
         MyIStack<IStmt> stk = state.getStk();
@@ -32,9 +33,11 @@ public class Controller {
         IStmt crtStmt = stk.pop();
         crtStmt.execute(state);
     }
-    public void reset(){
+
+    public void reset() {
         this.repo.reset();
     }
+
     public void allStep() throws MyStmtExecException, DivisionByZero, VariableNotFound, OperatorNotFound, IOException, FileDoesntExist, FileAlreadyUsed, FileNotOpened {
         PrgState prg = repo.getCrtPrg(); // repo is the controller field of type // MyRepoInterface
         this.repo.logPrgStateExec();
@@ -45,16 +48,21 @@ public class Controller {
                     prg.getHeap().getContent()));
             this.repo.logPrgStateExec();
         }
-        prg.getFileTable().setContent(closeFiles(
-                prg.getSymTable().getContent().values(),
-                prg.getFileTable().getContent()));
+        closeBuffer(prg.getFileTable().values());
     }
 
-    private Map<Integer, ITuple<String, BufferedReader>> closeFiles(Collection<Integer> values, Map<Integer, ITuple<String, BufferedReader>> content) {
-        return null;
+    private void closeBuffer(Collection<ITuple<String, BufferedReader>> values) {
+        values.forEach(e -> {
+            try {
+                e.getSecond().close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
     }
 
-    public String getFilePath(){
+
+    public String getFilePath() {
         return this.repo.getFilePath();
     }
 }

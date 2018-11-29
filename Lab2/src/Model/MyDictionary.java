@@ -35,6 +35,11 @@ public class MyDictionary<Key, Value> implements MyIDictionary<Key, Value> {
     }
 
     @Override
+    public Collection<Key> keys() {
+        return this.dictionary.keySet();
+    }
+
+    @Override
     public Value lookup(Key id) {
         return this.dictionary.get(id);
     }
@@ -47,11 +52,6 @@ public class MyDictionary<Key, Value> implements MyIDictionary<Key, Value> {
     @Override
     public void clear() {
         this.dictionary.clear();
-    }
-
-    @Override
-    public Collection<Key> keys() {
-        return this.dictionary.keySet();
     }
 
     @Override

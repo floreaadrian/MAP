@@ -53,7 +53,7 @@ public class BoolExp extends Exp {
     }
 
     @Override
-    public String toString(){
-        return "comp("+this.firstExpression.toString()+this.compareOperator+this.secondExpression+")";
+    public String toString() {
+        return "comp(" + this.firstExpression.toString() + this.compareOperator + this.secondExpression + ")";
     }
 }

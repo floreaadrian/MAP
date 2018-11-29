@@ -19,6 +19,7 @@ public class WhileStmt implements IStmt {
         if (this.condition.eval(symTbl, heap) != 0) {
             stack.push(this);
             stack.push(statements);
+            stack.push(statements);
         }
         return state;
     }
