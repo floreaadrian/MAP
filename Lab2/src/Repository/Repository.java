@@ -1,15 +1,16 @@
 package Repository;
 
-import Model.MyList;
 import Model.PrgState;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Repository implements IRepository {
-    private MyList<PrgState> prgList = new MyList<>();
+    private List<PrgState> prgList = new ArrayList<>();
     private String logFilePath;
 
     public Repository(PrgState e, String path) {
@@ -19,19 +20,15 @@ public class Repository implements IRepository {
 
     @Override
     public void reset() {
-        this.prgList.fromIndex(0).reset();
+        for (PrgState aPrgList : prgList) aPrgList.reset();
     }
 
-    @Override
-    public PrgState getCrtPrg() {
-        return this.prgList.fromIndex(0);
-    }
 
     @Override
-    public void logPrgStateExec() {
+    public void logPrgStateExec(PrgState pr) {
         try {
             PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)));
-            logFile.write(this.prgList.fromIndex(0).toString());
+            logFile.write(pr.toString());
             logFile.close();
         } catch (IOException e) {
             e.getStackTrace();
@@ -41,6 +38,16 @@ public class Repository implements IRepository {
     @Override
     public String getFilePath() {
         return this.logFilePath;
+    }
+
+    @Override
+    public List<PrgState> getPrgList() {
+        return this.prgList;
+    }
+
+    @Override
+    public void setPrgList(List<PrgState> list) {
+        this.prgList = list;
     }
 
 }

@@ -36,4 +36,9 @@ public class MyList<T> implements MyIList<T> {
         this.list.clear();
     }
 
+    @Override
+    public int size() {
+        return this.list.size();
+    }
+
 }

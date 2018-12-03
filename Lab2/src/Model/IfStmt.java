@@ -23,13 +23,13 @@ public class IfStmt implements IStmt {
     public PrgState execute(PrgState state) throws DivisionByZero, VariableNotFound, OperatorNotFound {
         MyIStack<IStmt> stk = state.getStk();
         MyIDictionary<String, Integer> symtbl = state.getSymTable();
-        MyIDictionary<Integer, Integer> heap = state.getHeap();
+        MyIRandKeyDict<Integer> heap = state.getHeap();
         if (this.condition.eval(symtbl, heap) == 0) {
             stk.push(elseS);
         } else {
             stk.push(thenS);
         }
-        return state;
+        return null;
     }
 
 }

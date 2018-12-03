@@ -2,31 +2,28 @@ package Model;
 
 import Exceptions.*;
 
-import java.io.IOException;
 
 public class NewStmt implements IStmt {
     private String var_name;
     private Exp expression;
-    private Generator generator;
 
-    public NewStmt(String var_name, Exp expression, Generator generator) {
+    public NewStmt(String var_name, Exp expression) {
         this.var_name = var_name;
         this.expression = expression;
-        this.generator = generator;
     }
 
     @Override
     public PrgState execute(PrgState state) throws DivisionByZero, VariableNotFound, OperatorNotFound {
         MyIDictionary<String, Integer> symTbl = state.getSymTable();
-        MyIDictionary<Integer, Integer> heap = state.getHeap();
+        MyIRandKeyDict<Integer> heap = state.getHeap();
         int evaluated = expression.eval(symTbl, heap);
-        int generatedNumber = generator.getGeneratedNumber();
+
+        int heapId = heap.add(evaluated);
         if (symTbl.isDefined(var_name))
-            symTbl.update(var_name, generatedNumber);
+            symTbl.update(var_name, heapId);
         else
-            symTbl.add(var_name, generatedNumber);
-        heap.add(generatedNumber, evaluated);
-        return state;
+            symTbl.add(var_name, heapId);
+        return null;
     }
 
     @Override

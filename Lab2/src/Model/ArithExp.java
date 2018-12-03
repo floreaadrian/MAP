@@ -15,7 +15,7 @@ public class ArithExp extends Exp {
     }
 
     //override
-    int eval(MyIDictionary<String, Integer> tbl,MyIDictionary<Integer,Integer> heap) throws DivisionByZero, VariableNotFound, OperatorNotFound {
+    int eval(MyIDictionary<String, Integer> tbl,MyIRandKeyDict<Integer> heap) throws DivisionByZero, VariableNotFound, OperatorNotFound {
         int finalResult;
         int rez1 = this.firstExp.eval(tbl,heap);
         int rez2 = this.sndExp.eval(tbl,heap);

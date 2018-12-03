@@ -10,7 +10,7 @@ public class ReadHeapExp extends Exp {
     }
 
     @Override
-    int eval(MyIDictionary<String, Integer> tbl, MyIDictionary<Integer, Integer> heap) throws VariableNotFound {
+    int eval(MyIDictionary<String, Integer> tbl, MyIRandKeyDict<Integer> heap) throws VariableNotFound {
         if (!tbl.isDefined(var_name)) throw new VariableNotFound();
         int heapAddress = tbl.lookup(var_name);
         if (!heap.isDefined(heapAddress)) throw new VariableNotFound();

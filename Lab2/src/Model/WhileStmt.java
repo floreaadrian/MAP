@@ -14,14 +14,13 @@ public class WhileStmt implements IStmt {
     @Override
     public PrgState execute(PrgState state) throws DivisionByZero, VariableNotFound, OperatorNotFound {
         MyIDictionary<String, Integer> symTbl = state.getSymTable();
-        MyIDictionary<Integer, Integer> heap = state.getHeap();
+        MyIRandKeyDict<Integer> heap = state.getHeap();
         MyIStack<IStmt> stack = state.getStk();
         if (this.condition.eval(symTbl, heap) != 0) {
             stack.push(this);
             stack.push(statements);
-            stack.push(statements);
         }
-        return state;
+        return null;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package Model;
 
+import Exceptions.*;
+
 import java.io.*;
 import java.util.Collections;
 
@@ -7,8 +9,8 @@ public class PrgState {
     private MyIStack<IStmt> exeStack;
     private MyIDictionary<String, Integer> symTable;
     private MyIList<Integer> out;
-    private MyIDictionary<Integer, ITuple<String, BufferedReader>> fileTable;
-    private MyIDictionary<Integer, Integer> heap;
+    private MyIRandKeyDict<ITuple<String, BufferedReader>> fileTable;
+    private MyIRandKeyDict<Integer> heap;
     private IStmt originalProgramState;
     private int id;
 
@@ -22,7 +24,7 @@ public class PrgState {
     }
 
     public PrgState(MyIStack<IStmt> stk, MyIDictionary<String, Integer> symtbl, MyIList<Integer> ot,
-                    MyIDictionary<Integer, ITuple<String, BufferedReader>> fileTable, MyIDictionary<Integer, Integer> heap,
+                    MyIRandKeyDict<ITuple<String, BufferedReader>> fileTable, MyIRandKeyDict<Integer> heap,
                     IStmt prg, int id) {
         this.exeStack = stk;
         this.symTable = symtbl;
@@ -34,7 +36,7 @@ public class PrgState {
         stk.push(prg);
     }
 
-    public MyIStack<IStmt> getStk() {
+    MyIStack<IStmt> getStk() {
         return this.exeStack;
     }
 
@@ -46,12 +48,26 @@ public class PrgState {
         return this.out;
     }
 
-    public MyIDictionary<Integer, ITuple<String, BufferedReader>> getFileTable() {
+    MyIRandKeyDict<ITuple<String, BufferedReader>> getFileTable() {
         return this.fileTable;
     }
 
-    public MyIDictionary<Integer, Integer> getHeap() {
+    public MyIRandKeyDict<Integer> getHeap() {
         return this.heap;
+    }
+
+    int getId() {
+        return this.id;
+    }
+
+    public boolean isNotCompleted() {
+        return !this.exeStack.isEmpty();
+    }
+
+    public PrgState oneStep() throws DivisionByZero, OperatorNotFound, FileDoesntExist, VariableNotFound, FileAlreadyUsed, FileNotOpened, IOException, MyStmtExecException {
+        if (this.exeStack.isEmpty()) throw new MyStmtExecException();
+        IStmt crtStmt = this.exeStack.pop();
+        return crtStmt.execute(this);
     }
 
     @Override

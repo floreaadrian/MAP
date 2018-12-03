@@ -7,7 +7,7 @@ public class ConstExp extends Exp {
         this.number = value;
     }
 
-    int eval(MyIDictionary<String, Integer> tbl,MyIDictionary<Integer,Integer> heap) {
+    int eval(MyIDictionary<String, Integer> tbl,MyIRandKeyDict<Integer> heap) {
         return number;
     }
 

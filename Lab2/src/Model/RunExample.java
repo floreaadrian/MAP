@@ -1,10 +1,8 @@
 package Model;
 
 import Controller.Controller;
-import Exceptions.*;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
 
 public class RunExample extends Command {
@@ -25,9 +23,7 @@ public class RunExample extends Command {
         try {
             ctrl.reset();
             ctrl.allStep();
-        } catch (MyStmtExecException | FileAlreadyUsed | FileNotOpened | FileDoesntExist | DivisionByZero | VariableNotFound | OperatorNotFound e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

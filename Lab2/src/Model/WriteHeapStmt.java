@@ -15,13 +15,13 @@ public class WriteHeapStmt implements IStmt {
     @Override
     public PrgState execute(PrgState state) throws DivisionByZero, VariableNotFound, OperatorNotFound {
         MyIDictionary<String, Integer> symTbl = state.getSymTable();
-        MyIDictionary<Integer, Integer> heap = state.getHeap();
+        MyIRandKeyDict<Integer> heap = state.getHeap();
         if (!symTbl.isDefined(var_name)) throw new VariableNotFound();
         int heapAddress = symTbl.lookup(var_name);
         if (!heap.isDefined(heapAddress)) throw new VariableNotFound();
         int evaluated = expression.eval(symTbl, heap);
         heap.update(heapAddress, evaluated);
-        return state;
+        return null;
     }
 
     @Override

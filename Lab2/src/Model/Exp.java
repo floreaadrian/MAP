@@ -5,5 +5,5 @@ import Exceptions.OperatorNotFound;
 import Exceptions.VariableNotFound;
 
 abstract class Exp {
-    abstract int eval(MyIDictionary<String, Integer> tbl,MyIDictionary<Integer,Integer> heap) throws DivisionByZero, VariableNotFound, OperatorNotFound;
+    abstract int eval(MyIDictionary<String, Integer> tbl,MyIRandKeyDict<Integer> heap) throws DivisionByZero, VariableNotFound, OperatorNotFound;
 }

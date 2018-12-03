@@ -16,9 +16,9 @@ public class PrintStmt implements IStmt {
     public PrgState execute(PrgState state) throws DivisionByZero, VariableNotFound, OperatorNotFound {
         MyIList<Integer> out = state.getOut();
         MyIDictionary<String, Integer> symTbl = state.getSymTable();
-        MyIDictionary<Integer,Integer> heap = state.getHeap();
+        MyIRandKeyDict<Integer> heap = state.getHeap();
         int val = exp.eval(symTbl,heap);
         out.add(val);
-        return state;
+        return null;
     }
 }

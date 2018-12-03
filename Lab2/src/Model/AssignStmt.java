@@ -20,13 +20,13 @@ public class AssignStmt implements IStmt {
 
     public PrgState execute(PrgState state) throws DivisionByZero, VariableNotFound, OperatorNotFound {
         MyIDictionary<String, Integer> symTbl = state.getSymTable();
-        MyIDictionary<Integer,Integer> heap = state.getHeap();
+        MyIRandKeyDict<Integer> heap = state.getHeap();
         int val = exp.eval(symTbl,heap);
         if (symTbl.isDefined(id)) {
             symTbl.update(id, val);
         } else {
             symTbl.add(id, val);
         }
-        return state;
+        return null;
     }
 }

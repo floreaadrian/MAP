@@ -16,7 +16,7 @@ public class BoolExp extends Exp {
     }
 
     @Override
-    int eval(MyIDictionary<String, Integer> tbl, MyIDictionary<Integer, Integer> heap) throws DivisionByZero, VariableNotFound, OperatorNotFound {
+    int eval(MyIDictionary<String, Integer> tbl, MyIRandKeyDict<Integer> heap) throws DivisionByZero, VariableNotFound, OperatorNotFound {
         int finalResult;
         int firstEvaluation = this.firstExpression.eval(tbl, heap);
         int secondEvaluation = this.secondExpression.eval(tbl, heap);

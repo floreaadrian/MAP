@@ -5,4 +5,5 @@ public interface MyIList<T> {
     T fromIndex(int index);
     String toString();
     void clear();
+    int size();
 }

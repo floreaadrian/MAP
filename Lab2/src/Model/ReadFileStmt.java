@@ -18,7 +18,7 @@ public class ReadFileStmt implements IStmt {
     @Override
     public PrgState execute(PrgState state) throws DivisionByZero, VariableNotFound, OperatorNotFound, FileNotOpened, IOException {
         MyIDictionary<String, Integer> symTable = state.getSymTable();
-        MyIDictionary<Integer,Integer> heap = state.getHeap();
+        MyIRandKeyDict<Integer> heap = state.getHeap();
         int file_id = this.exp_file_id.eval(symTable,heap);
         ITuple<String, BufferedReader> fileTable = state.getFileTable().lookup(file_id);
         if (fileTable == null)
@@ -33,7 +33,7 @@ public class ReadFileStmt implements IStmt {
             symTable.update(var_name, value);
         else
             symTable.add(var_name, value);
-        return state;
+        return null;
     }
 
     @Override
