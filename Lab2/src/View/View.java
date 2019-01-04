@@ -14,8 +14,8 @@ public class View {
         MyIStack<IStmt> myStack1 = new MyStack<>();
         MyIDictionary<String, Integer> myDictionary1 = new MyDictionary<>();
         MyIList<Integer> myList1 = new MyList<>();
-        MyIRandKeyDict<ITuple<String, BufferedReader>> fileTable1 = new MyRandKeyDict<>(generator);
-        MyIRandKeyDict<Integer> heap = new MyRandKeyDict<>(generator);
+        MyIRandIntKeyDict<ITuple<String, BufferedReader>> fileTable1 = new MyRandIntKeyDict<>(generator);
+        MyIRandIntKeyDict<Integer> heap = new MyRandIntKeyDict<>(generator);
         PrgState state1 = new PrgState(myStack1, myDictionary1, myList1, fileTable1, heap, statement, nrOfCtrl);
         IRepository repo1 = new Repository(state1, logPath);
         return new Controller(repo1);
@@ -128,8 +128,8 @@ public class View {
         IStmt ex13 = new OpenRFileStmt("var", "/Users/adrianflorea/Codes/Java/Lab2/test.in");
         Controller ctr13 = createController(ex13, 13);
 
-        /*
-        v=10;new(a,22);
+         /*
+         v=10;new(a,22);
          fork(wH(a,30);v=32;print(v);print(rH(a)));
          print(v);print(rH(a))
          */

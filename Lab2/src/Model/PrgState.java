@@ -9,8 +9,8 @@ public class PrgState {
     private MyIStack<IStmt> exeStack;
     private MyIDictionary<String, Integer> symTable;
     private MyIList<Integer> out;
-    private MyIRandKeyDict<ITuple<String, BufferedReader>> fileTable;
-    private MyIRandKeyDict<Integer> heap;
+    private MyIRandIntKeyDict<ITuple<String, BufferedReader>> fileTable;
+    private MyIRandIntKeyDict<Integer> heap;
     private IStmt originalProgramState;
     private int id;
 
@@ -24,7 +24,7 @@ public class PrgState {
     }
 
     public PrgState(MyIStack<IStmt> stk, MyIDictionary<String, Integer> symtbl, MyIList<Integer> ot,
-                    MyIRandKeyDict<ITuple<String, BufferedReader>> fileTable, MyIRandKeyDict<Integer> heap,
+                    MyIRandIntKeyDict<ITuple<String, BufferedReader>> fileTable, MyIRandIntKeyDict<Integer> heap,
                     IStmt prg, int id) {
         this.exeStack = stk;
         this.symTable = symtbl;
@@ -48,11 +48,11 @@ public class PrgState {
         return this.out;
     }
 
-    MyIRandKeyDict<ITuple<String, BufferedReader>> getFileTable() {
+    public MyIRandIntKeyDict<ITuple<String, BufferedReader>> getFileTable() {
         return this.fileTable;
     }
 
-    public MyIRandKeyDict<Integer> getHeap() {
+    public MyIRandIntKeyDict<Integer> getHeap() {
         return this.heap;
     }
 

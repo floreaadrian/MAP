@@ -3,6 +3,8 @@ package Controller;
 import Model.*;
 import Repository.IRepository;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.*;
@@ -37,9 +39,9 @@ public class Controller {
     private List<PrgState> heapCleanup(List<PrgState> prgList) {
         Collection<Integer> allSymTableValues = collectSymTableValuesPrgList(prgList);
         return prgList.stream().peek(prgState -> {
-            Map<Integer, Integer> jmk = conservativeGarbageCollector(allSymTableValues,
+            Map<Integer, Integer> garbageCollected = conservativeGarbageCollector(allSymTableValues,
                     prgState.getHeap().getContent());
-            prgState.getHeap().setContent(jmk);
+            prgState.getHeap().setContent(garbageCollected);
         }).collect(Collectors.toList());
     }
 
@@ -61,6 +63,7 @@ public class Controller {
             prgList.forEach(prg -> repo.logPrgStateExec(prg));
             prgList = removeCompletedPrg(repo.getPrgList());
         }
+        closeBuffer(repo.getPrgList().get(0).getFileTable().getContent().values());
         executor.shutdownNow();
         repo.setPrgList(prgList);
     }
@@ -83,15 +86,15 @@ public class Controller {
         repo.setPrgList(prgList);
     }
 
-//    private void closeBuffer(Collection<ITuple<String, BufferedReader>> values) {
-//        values.forEach(e -> {
-//            try {
-//                e.getSecond().close();
-//            } catch (IOException e1) {
-//                e1.printStackTrace();
-//            }
-//        });
-//    }
+    private void closeBuffer(Collection<ITuple<String, BufferedReader>> values) {
+        values.forEach(e -> {
+            try {
+                e.getSecond().close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+    }
 
     public String getFilePath() {
         return this.repo.getFilePath();
