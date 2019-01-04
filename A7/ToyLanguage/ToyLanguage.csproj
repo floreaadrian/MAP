@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{CB5B1650-1BD2-4E9B-998C-9E9EE780FC21}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ToyLanguage</RootNamespace>
+    <AssemblyName>ToyLanguage</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\IStmt.cs" />
+    <Compile Include="Model\PrgState.cs" />
+    <Compile Include="Model\IDict.cs" />
+    <Compile Include="Model\IStack.cs" />
+    <Compile Include="Model\IList.cs" />
+    <Compile Include="Model\MyDict.cs" />
+    <Compile Include="Model\MyStack.cs" />
+    <Compile Include="Model\MyList.cs" />
+    <Compile Include="Model\Exp.cs" />
+    <Compile Include="Model\ArithExp.cs" />
+    <Compile Include="Exceptions\DivisionByZero.cs" />
+    <Compile Include="Exceptions\OperatorNotFound.cs" />
+    <Compile Include="Model\AssignStmt.cs" />
+    <Compile Include="Model\CompStmt.cs" />
+    <Compile Include="Model\ConstExp.cs" />
+    <Compile Include="Model\IfStmt.cs" />
+    <Compile Include="Model\PrintStmt.cs" />
+    <Compile Include="Model\VarExp.cs" />
+    <Compile Include="Exceptions\VariableNotFound.cs" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\Repo.cs" />
+    <Compile Include="Ctrl\Controller.cs" />
+    <Compile Include="Exceptions\MyStmtExecException.cs" />
+    <Compile Include="Model\CloseRFileStmt.cs" />
+    <Compile Include="Model\MyTuple.cs" />
+    <Compile Include="Model\OpenRFileStmt.cs" />
+    <Compile Include="Model\IDictRandIntKey.cs" />
+    <Compile Include="Model\FileTable.cs" />
+    <Compile Include="Exceptions\FileDoesntExist.cs" />
+    <Compile Include="Exceptions\FileAlreadyUsed.cs" />
+    <Compile Include="Exceptions\FileNotOpened.cs" />
+    <Compile Include="Model\ReadFileStmt.cs" />
+    <Compile Include="View\TextMenu.cs" />
+    <Compile Include="Model\Command.cs" />
+    <Compile Include="Model\ExitCommand.cs" />
+    <Compile Include="Model\RunExampleCommand.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="Repository\" />
+    <Folder Include="Ctrl\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="View\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

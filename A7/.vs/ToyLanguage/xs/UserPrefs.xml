@@ -1,0 +1,15 @@
+﻿<Properties StartupConfiguration="{CB5B1650-1BD2-4E9B-998C-9E9EE780FC21}|Default">
+  <MonoDevelop.Ide.ItemProperties.ToyLanguage PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ToyLanguage/Program.cs">
+    <Files>
+      <File FileName="ToyLanguage/View/TextMenu.cs" Line="22" Column="9" />
+      <File FileName="ToyLanguage/Program.cs" Line="11" Column="20" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

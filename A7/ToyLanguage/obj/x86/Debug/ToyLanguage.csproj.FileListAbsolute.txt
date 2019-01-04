@@ -1,0 +1,6 @@
+/Users/adrianflorea/Codes/C#/ToyLanguage/ToyLanguage/bin/Debug/ToyLanguage.exe
+/Users/adrianflorea/Codes/C#/ToyLanguage/ToyLanguage/bin/Debug/ToyLanguage.pdb
+/Users/adrianflorea/Codes/C#/ToyLanguage/ToyLanguage/obj/x86/Debug/ToyLanguage.csprojAssemblyReference.cache
+/Users/adrianflorea/Codes/C#/ToyLanguage/ToyLanguage/obj/x86/Debug/ToyLanguage.csproj.CoreCompileInputs.cache
+/Users/adrianflorea/Codes/C#/ToyLanguage/ToyLanguage/obj/x86/Debug/ToyLanguage.exe
+/Users/adrianflorea/Codes/C#/ToyLanguage/ToyLanguage/obj/x86/Debug/ToyLanguage.pdb
