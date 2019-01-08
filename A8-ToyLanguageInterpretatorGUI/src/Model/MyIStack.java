@@ -12,4 +12,5 @@ public interface MyIStack<T> {
     String toString();
 
     Stack<T> toStack();
+    int size();
 }

@@ -16,6 +16,6 @@ public class ForkStmt implements IStmt{
     @Override
     public PrgState execute(PrgState state) {
         return new PrgState(new MyStack<>(),state.getSymTable().clone(),state.getOut(),
-                state.getFileTable(),state.getHeap(),this.forkStmt,state.getId()*10);
+                state.getFileTable(),state.getHeap(),this.forkStmt,state.getId()*10*state.getStk().size());
     }
 }

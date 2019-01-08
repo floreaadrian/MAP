@@ -49,4 +49,9 @@ public class MyStack<T> implements MyIStack<T> {
             toStk.push(this.stack.get(i));
         return toStk;
     }
+
+    @Override
+    public int size() {
+        return this.stack.size();
+    }
 }
