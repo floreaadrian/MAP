@@ -1,9 +1,9 @@
 ﻿<Properties StartupConfiguration="{CB5B1650-1BD2-4E9B-998C-9E9EE780FC21}|Default">
   <MonoDevelop.Ide.ItemProperties.ToyLanguage PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ToyLanguage/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ToyLanguage/View/TextMenu.cs">
     <Files>
-      <File FileName="ToyLanguage/View/TextMenu.cs" Line="22" Column="9" />
-      <File FileName="ToyLanguage/Program.cs" Line="11" Column="20" />
+      <File FileName="ToyLanguage/View/TextMenu.cs" Line="48" Column="31" />
+      <File FileName="ToyLanguage/Program.cs" Line="63" Column="32" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

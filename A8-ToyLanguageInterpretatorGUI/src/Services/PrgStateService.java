@@ -14,8 +14,6 @@ public class PrgStateService implements Observable<PrgState> {
         this.repo = repo;
     }
 
-
-
     public IRepository getRepo() {
         return this.repo;
     }
@@ -26,20 +24,19 @@ public class PrgStateService implements Observable<PrgState> {
 
     public List<String> getOutList() {
         List<String> mList = new ArrayList<>();
-        for(int i = 0; i < this.repo.getPrgList().get(0).getOut().size(); ++ i)
+        for (int i = 0; i < this.repo.getPrgList().get(0).getOut().size(); ++i)
             mList.add(String.valueOf(this.repo.getPrgList().get(0).getOut().fromIndex(i)));
         return mList;
     }
 
     public List<Tuple<Integer, String>> getFileList() {
         List<Tuple<Integer, String>> mList = new ArrayList<>();
-        for(Integer x : this.repo.getPrgList().get(0).getFileTable().keys())
+        for (Integer x : this.repo.getPrgList().get(0).getFileTable().keys())
             mList.add(new Tuple<>(x, this.repo.getPrgList().get(0).getFileTable().lookup(x).getFirst()));
         return mList;
     }
 
     public List<Map.Entry<Integer, Integer>> getHeapList() {
-        System.out.println(repo.getPrgList().get(0).getHeap().getContent().entrySet());
         return new ArrayList<>(repo.getPrgList().get(0).getHeap().getContent().entrySet());
     }
 
@@ -55,7 +52,7 @@ public class PrgStateService implements Observable<PrgState> {
 
     @Override
     public void notifyObservers() {
-        for(Observer o : observers)
+        for (Observer o : this.observers)
             o.update(this);
     }
 

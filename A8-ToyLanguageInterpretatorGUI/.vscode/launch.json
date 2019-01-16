@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - View",
+            "request": "launch",
+            "mainClass": "View.View",
+            "projectName": "A8-ToyLanguageInterpretatorGUI_c2191901"
+        }
+    ]
+}

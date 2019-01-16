@@ -1,6 +1,6 @@
 package Controller;
 
-import Exceptions.*;
+
 import Model.IStmt;
 import Model.ITuple;
 import Model.PrgState;
@@ -115,8 +115,7 @@ public class Controller implements Services.Observer<PrgState> {
         TableColumn<Tuple<String, Integer>, String> symNameColumn = new TableColumn<>("Symbol name");
         TableColumn<Tuple<String, Integer>, String> symValueColumn = new TableColumn<>("Value");
         symNameColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getFirst()));
-        symValueColumn
-                .setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getSecond())));
+        symValueColumn.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getSecond())));
         this.symTableView.getColumns().setAll(symNameColumn, symValueColumn);
         this.symTableModel = FXCollections.observableArrayList();
         this.symTableView.setItems(this.symTableModel);
@@ -125,23 +124,23 @@ public class Controller implements Services.Observer<PrgState> {
     private void fileTableServiceSetup() {
         /// fileTableView
         this.fileTableModel = FXCollections.observableArrayList();
-        TableColumn<Tuple<Integer, String>, String> fd = new TableColumn<>("File descriptor");
-        TableColumn<Tuple<Integer, String>, String> fn = new TableColumn<>("File name");
-        fd.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getFirst())));
-        fn.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getSecond())));
+        TableColumn<Tuple<Integer, String>, String> fileDescColumn = new TableColumn<>("File descriptor");
+        TableColumn<Tuple<Integer, String>, String> fileNameColumn = new TableColumn<>("File name");
+        fileDescColumn.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getFirst())));
+        fileNameColumn.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getSecond())));
 
-        this.fileTableView.getColumns().setAll(fd, fn);
+        this.fileTableView.getColumns().setAll(fileDescColumn, fileNameColumn);
         this.fileTableView.setItems(this.fileTableModel);
     }
 
     private void heapServiceSetup() {
         // heapTableView
         this.heapTableModel = FXCollections.observableArrayList();
-        TableColumn<Map.Entry<Integer, Integer>, String> first = new TableColumn<>("Address");
-        TableColumn<Map.Entry<Integer, Integer>, String> second = new TableColumn<>("Value");
-        first.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getKey())));
-        second.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getValue())));
-        this.heapTableView.getColumns().setAll(first, second);
+        TableColumn<Map.Entry<Integer, Integer>, String> heapAddrColumn = new TableColumn<>("Address");
+        TableColumn<Map.Entry<Integer, Integer>, String> heapValueColumn = new TableColumn<>("Value");
+        heapAddrColumn.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getKey())));
+        heapValueColumn.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getValue())));
+        this.heapTableView.getColumns().setAll(heapAddrColumn, heapValueColumn);
         this.heapTableView.setItems(this.heapTableModel);
     }
 
@@ -186,10 +185,9 @@ public class Controller implements Services.Observer<PrgState> {
             oneStepForAllPrg(prgList);
             repo.setPrgList(heapCleanup(prgList));
             prgList.forEach(prg -> repo.logPrgStateExec(prg));
-            prgList = removeCompletedPrg(repo.getPrgList());
+            //prgList = removeCompletedPrg(repo.getPrgList());
         }
         closeBuffer(repo.getPrgList().get(0).getFileTable().getContent().values());
-        executor.shutdownNow();
         repo.setPrgList(prgList);
     }
 
@@ -200,19 +198,19 @@ public class Controller implements Services.Observer<PrgState> {
             this.executor = Executors.newFixedThreadPool(2);
         }
         List<PrgState> prgList = removeCompletedPrg(this.repo.getPrgList());
-        prgList.forEach(prg -> this.repo.logPrgStateExec(prg));
-        oneStepForAllPrg(prgList);
-        this.repo.setPrgList(heapCleanup(prgList));
-        prgList.forEach(prg -> this.repo.logPrgStateExec(prg));
-        prgList = removeCompletedPrg(this.repo.getPrgList());
-        this.repo.setPrgList(prgList);
-        if (this.repo.size() == 0) {
-            this.executor.shutdownNow();
-            this.onestepBTN.setDisable(true);
+        if (prgList.size() != 0) {
+            oneStepForAllPrg(prgList);
+            this.repo.setPrgList(prgList);
+            prgList.forEach(prg -> this.repo.logPrgStateExec(prg));
+            this.prgStateService.notifyObservers();
+            this.repo.setPrgList(heapCleanup(prgList));
         }
+
     }
 
     private void oneStepForAllPrg(List<PrgState> prgList) throws InterruptedException {
+
+        this.repo.setPrgList(removeCompletedPrg(this.repo.getPrgList()));
         List<Callable<PrgState>> callList = prgList.stream().map((PrgState p) -> (Callable<PrgState>) (p::oneStep))
                 .collect(Collectors.toList());
         List<PrgState> newPrgList = executor.invokeAll(callList).stream().map(future -> {
@@ -226,7 +224,8 @@ public class Controller implements Services.Observer<PrgState> {
         }).filter(Objects::nonNull).collect(Collectors.toList());
         prgList.addAll(newPrgList);
         repo.setPrgList(prgList);
-        this.prgStateService.notifyObservers();
+
+        //this.prgStateService.notifyObservers();
     }
 
     private void closeBuffer(Collection<ITuple<String, BufferedReader>> values) {
@@ -281,21 +280,22 @@ public class Controller implements Services.Observer<PrgState> {
     @Override
     public void update(Services.Observable<PrgState> observable) {
         List<PrgState> prgStates = this.prgStateService.getAll();
-        this.prgStatesCnt.setText(String.valueOf(prgStates.size()));
-        this.prgStateModel.setAll(prgStates);
-        this.outListModel.setAll(this.prgStateService.getOutList());
-        this.heapTableModel.setAll(this.prgStateService.getHeapList());
-        /// this we change
-        this.fileTableModel.setAll(prgStates.get(0).getFileTable().keys().stream()
-                .map(k -> new Tuple<>(k, prgStates.get(0).getFileTable().lookup(k).getFirst()))
-                .collect(Collectors.toList()));
-        PrgState current = prgStates.stream().filter(e -> e.getId() == Integer.valueOf(prgIdLabel.getText()))
-                .findFirst().orElse(null);
-        if(current != null) {
-            List<IStmt> list = new ArrayList<>(current.getStk().toStack());
-            this.exeStackModel.setAll(list);
-            this.symTableModel.setAll(current.getSymTable().clone().toMap().entrySet().stream()
-                    .map(e -> new Tuple<>(e.getKey(), e.getValue())).collect(Collectors.toList()));
+        if (prgStates != null) {
+            this.prgStatesCnt.setText(String.valueOf(prgStates.size()));
+            //System.out.println(prgStates);
+            this.prgStateModel.setAll(prgStates);
+            this.outListModel.setAll(this.prgStateService.getOutList());
+            this.heapTableModel.setAll(this.prgStateService.getHeapList());
+            this.fileTableModel.setAll(this.prgStateService.getFileList());
+            /// this we change
+            PrgState current = prgStates.stream().filter(e -> e.getId() == Integer.valueOf(prgIdLabel.getText()))
+                    .findFirst().orElse(null);
+            if (current != null) {
+                List<IStmt> list = new ArrayList<>(current.getStk().toStack());
+                this.exeStackModel.setAll(list);
+                this.symTableModel.setAll(current.getSymTable().clone().toMap().entrySet().stream()
+                        .map(e -> new Tuple<>(e.getKey(), e.getValue())).collect(Collectors.toList()));
+            }
         }
     }
 }

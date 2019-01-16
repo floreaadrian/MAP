@@ -144,11 +144,11 @@ public class View extends Application {
         IStmt ex13 = new OpenRFileStmt("var", "/Users/adrianflorea/Codes/Java/Lab2/test.in");
 
         /*
-         * v=10;new(a,22); fork(wH(a,30);v=32;print(v);print(rH(a)));
+         * v=10;new(a,22); fork(v=32;wH(a,30);print(v);print(rH(a)));
          * print(v);print(rH(a))
          */
-        IStmt forkStmt = new CompStmt(new WriteHeapStmt("a", new ConstExp(30)), new CompStmt(
-                new AssignStmt("v", new ConstExp(32)),
+        IStmt forkStmt = new CompStmt(new AssignStmt("v", new ConstExp(32)), new CompStmt(
+                new WriteHeapStmt("a", new ConstExp(30)),
                 new CompStmt(new PrintStmt(new VarExp("v")), new PrintStmt(new ReadHeapExp("a")))));
         IStmt ex14 = new CompStmt(new AssignStmt("v", new ConstExp(10)),
                 new CompStmt(new NewStmt("a", new ConstExp(22)),
@@ -156,27 +156,26 @@ public class View extends Application {
                                 new CompStmt(new PrintStmt(new VarExp("v")),
                                         new PrintStmt(new ReadHeapExp("a"))))));
 
-
         IStmt ex15 = new CompStmt(new NewStmt("a", new ConstExp(32)), new AssignStmt("a", new ConstExp(32)));
-        ////for(v = 0; v<3; ++v) print(v);
+        //// for(v = 0; v<3; ++v) print(v);
         IStmt ex16 = new ForStmt(new AssignStmt("v", new ConstExp(0)),
                 new BoolExp("<", new VarExp("v"), new ConstExp(3)),
                 new AssignStmt("v", new ArithExp("+", new VarExp("v"), new ConstExp(1))),
                 new PrintStmt(new VarExp("v")));
-        ////v=20;
-        //(for(v=0;v<3;v=v+1) fork(print(v);v=v+1) );
-        //print(v*10)
+        //// v=20;
+        // (for(v=0;v<3;v=v+1) fork(print(v);v=v+1) );
+        // print(v*10)
 
-        IStmt ex17 = new CompStmt(new AssignStmt("v", new ConstExp(20)),
-                new CompStmt(
-                        new ForStmt(
-                                new AssignStmt("v", new ConstExp(0)),
-                                new BoolExp("<", new VarExp("v"), new ConstExp(3)),
-                                new AssignStmt("v", new ArithExp("+", new VarExp("v"), new ConstExp(1))),
-                                new ForkStmt(new CompStmt(new PrintStmt(new VarExp("v")),
-                                        new AssignStmt("v", new ArithExp("+", new VarExp("v"), new ConstExp(1)))))),
-                        new PrintStmt(new ArithExp("*",new ConstExp(10),new VarExp("v"))))
-        );
+        IStmt ex17 = new CompStmt(new AssignStmt("v", new ConstExp(20)), new CompStmt(
+                new ForStmt(new AssignStmt("v", new ConstExp(0)),
+                        new BoolExp("<", new VarExp("v"), new ConstExp(3)), new AssignStmt(
+                        "v",
+                        new ArithExp("+", new VarExp("v"), new ConstExp(1))),
+                        new ForkStmt(new CompStmt(new PrintStmt(new VarExp("v")),
+                                new AssignStmt("v",
+                                        new ArithExp("+", new VarExp("v"),
+                                                new ConstExp(1)))))),
+                new PrintStmt(new ArithExp("*", new ConstExp(10), new VarExp("v")))));
         //// STARTING THE GUI
         ///
         try {
@@ -207,7 +206,7 @@ public class View extends Application {
             programList.setCellFactory(new Callback<ListView<IStmt>, ListCell<IStmt>>() {
                 @Override
                 public ListCell<IStmt> call(ListView<IStmt> param) {
-                    ListCell<IStmt> listCell = new ListCell<IStmt>() {
+                    return new ListCell<IStmt>() {
                         @Override
                         protected void updateItem(IStmt e, boolean empty) {
                             super.updateItem(e, empty);
@@ -217,7 +216,6 @@ public class View extends Application {
                                 setText(e.toString());
                         }
                     };
-                    return listCell;
                 }
             });
             root.getChildren().add(programList);
@@ -235,7 +233,7 @@ public class View extends Application {
                     try {
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(getClass().getResource("Menu.fxml"));
-                        VBox root = (VBox) loader.load();
+                        VBox root = loader.load();
                         PrgStateService prgStateService = new PrgStateService(
                                 createRepository(newValue));
                         Controller ctrl = loader.getController();

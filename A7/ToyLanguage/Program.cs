@@ -11,7 +11,7 @@ namespace ToyLanguage
     class MainClass
     {
         private static Controller createController(IStmt statement){
-            String logPath = "/Users/adrianflorea/Codes/C#/ToyLanguage/log.out";
+            String logPath = "/Users/adrianflorea/Codes/MAP/A7/log.out";
             IStack <IStmt> myStack1 = new MyStack<IStmt>();
             IDict<String, int> myDictionary1 = new MyDict<String, int>();
             IList<int> myList1 = new MyList<int>();
@@ -48,7 +48,7 @@ namespace ToyLanguage
             else print(0));
             closeRFile(var_f)*/
             IStmt ex4 = new CompStmt(
-                    new OpenRFileStmt("var_f", "/Users/adrianflorea/Codes/C#/ToyLanguage/input.in"),
+                    new OpenRFileStmt("var_f", "/Users/adrianflorea/Codes/MAP/A7/input.in"),
                     new CompStmt(new ReadFileStmt(new VarExp("var_f"), "var_c"), new CompStmt(
                             new PrintStmt(new VarExp("var_c")), new CompStmt(new IfStmt(new VarExp("var_c"),
                             new CompStmt(new ReadFileStmt(new VarExp("var_f"), "var_c"), new PrintStmt(new VarExp("var_c"))),
@@ -62,7 +62,7 @@ namespace ToyLanguage
             else print(0));
             closeRFile(var_f)*/
             IStmt ex5 = new CompStmt(
-                    new OpenRFileStmt("var_f", "/Users/adrianflorea/Codes/C#/ToyLanguage/input.in"),
+                    new OpenRFileStmt("var_f", "/Users/adrianflorea/Codes/MAP/A7/input.in"),
                     new CompStmt(new ReadFileStmt(new VarExp("var_f+2"), "var_c"), new CompStmt(
                             new PrintStmt(new VarExp("var_c")), new CompStmt(new IfStmt(new VarExp("var_c"),
                             new CompStmt(new ReadFileStmt(new VarExp("var_f"), "var_c"), new PrintStmt(new VarExp("var_c"))),

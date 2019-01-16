@@ -43,7 +43,13 @@ namespace ToyLanguage.View
                 }
                 else
                 {
-                    com.execute();
+                    try
+                    {
+                        com.execute();
+                    }catch(Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
                 }
 
             }
