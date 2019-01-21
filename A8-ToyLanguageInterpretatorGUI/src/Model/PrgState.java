@@ -11,6 +11,7 @@ public class PrgState {
     private MyIList<Integer> out;
     private MyIRandIntKeyDict<ITuple<String, BufferedReader>> fileTable;
     private MyIRandIntKeyDict<Integer> heap;
+    private MyIRandIntKeyDict<Integer> lockTable;
     private IStmt originalProgramState;
     private int id;
 
@@ -20,11 +21,13 @@ public class PrgState {
         this.out.clear();
         this.fileTable.clear();
         this.heap.clear();
+        this.lockTable.clear();
         this.exeStack.push(this.originalProgramState);
     }
 
     public PrgState(MyIStack<IStmt> stk, MyIDictionary<String, Integer> symtbl, MyIList<Integer> ot,
                     MyIRandIntKeyDict<ITuple<String, BufferedReader>> fileTable, MyIRandIntKeyDict<Integer> heap,
+                    MyIRandIntKeyDict<Integer> lockTable,
                     IStmt prg, int id) {
         this.exeStack = stk;
         this.symTable = symtbl;
@@ -33,6 +36,7 @@ public class PrgState {
         this.originalProgramState = prg;
         this.fileTable = fileTable;
         this.heap = heap;
+        this.lockTable = lockTable;
         stk.push(prg);
     }
 
@@ -54,6 +58,10 @@ public class PrgState {
 
     public MyIRandIntKeyDict<Integer> getHeap() {
         return this.heap;
+    }
+
+    public MyIRandIntKeyDict<Integer> getLockTable() {
+        return this.lockTable;
     }
 
     public int getId() {

@@ -40,6 +40,10 @@ public class PrgStateService implements Observable<PrgState> {
         return new ArrayList<>(repo.getPrgList().get(0).getHeap().getContent().entrySet());
     }
 
+    public List<Map.Entry<Integer, Integer>> getLockTableList() {
+        return new ArrayList<>(repo.getPrgList().get(0).getLockTable().getContent().entrySet());
+    }
+
     @Override
     public void addObserver(Observer<PrgState> o) {
         observers.add(o);

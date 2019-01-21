@@ -1,6 +1,5 @@
 package Controller;
 
-
 import Model.IStmt;
 import Model.ITuple;
 import Model.PrgState;
@@ -31,6 +30,8 @@ public class Controller implements Services.Observer<PrgState> {
     @FXML
     private TableView<Map.Entry<Integer, Integer>> heapTableView;
     @FXML
+    private TableView<Map.Entry<Integer, Integer>> lockTableView;
+    @FXML
     private ListView<String> outListView;
     @FXML
     private TableView<Tuple<Integer, String>> fileTableView;
@@ -52,6 +53,7 @@ public class Controller implements Services.Observer<PrgState> {
     private ObservableList<PrgState> prgStateModel;
     private ObservableList<String> outListModel;
     private ObservableList<Map.Entry<Integer, Integer>> heapTableModel;
+    private ObservableList<Map.Entry<Integer, Integer>> lockTableModel;
     private ObservableList<Tuple<Integer, String>> fileTableModel;
     private ObservableList<IStmt> exeStackModel;
     private PrgStateService prgStateService;
@@ -85,22 +87,27 @@ public class Controller implements Services.Observer<PrgState> {
         heapServiceSetup();
         fileTableServiceSetup();
         symTableServiceSetup();
+        lockTableServiceSetup();
         // outListView
         this.outListModel = FXCollections.observableArrayList();
         this.outListView.setItems(this.outListModel);
 
         this.prgStateListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
-                    prgIdLabel.setText(String.valueOf(newValue.getId()));
-                    List<PrgState> prgStates = prgStateService.getAll();
-                    PrgState current = prgStates.stream()
-                            .filter(e -> e.getId() == Integer.valueOf(prgIdLabel.getText())).findFirst().orElse(null);
-                    if (current != null) {
-                        List<IStmt> list = new ArrayList<>(current.getStk().toStack());
-                        Collections.reverse(list);
-                        exeStackModel.setAll(list);
-                        symTableModel.setAll(current.getSymTable().clone().toMap().entrySet().stream()
-                                .map(e -> new Tuple<>(e.getKey(), e.getValue())).collect(Collectors.toList()));
+                    if (newValue != null) {
+                        prgIdLabel.setText(String.valueOf(newValue.getId()));
+                        List<PrgState> prgStates = prgStateService.getAll();
+                        PrgState current = prgStates.stream()
+                                .filter(e -> e.getId() == Integer.valueOf(prgIdLabel.getText())).findFirst()
+                                .orElse(null);
+                        if (current != null) {
+                            List<IStmt> list = new ArrayList<>(current.getStk().toStack());
+
+                            // Collections.reverse(list);
+                            exeStackModel.setAll(list);
+                            symTableModel.setAll(current.getSymTable().clone().toMap().entrySet().stream()
+                                    .map(e -> new Tuple<>(e.getKey(), e.getValue())).collect(Collectors.toList()));
+                        }
                     }
                 });
 
@@ -115,19 +122,23 @@ public class Controller implements Services.Observer<PrgState> {
         TableColumn<Tuple<String, Integer>, String> symNameColumn = new TableColumn<>("Symbol name");
         TableColumn<Tuple<String, Integer>, String> symValueColumn = new TableColumn<>("Value");
         symNameColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getFirst()));
-        symValueColumn.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getSecond())));
+        symValueColumn
+                .setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getSecond())));
         this.symTableView.getColumns().setAll(symNameColumn, symValueColumn);
         this.symTableModel = FXCollections.observableArrayList();
         this.symTableView.setItems(this.symTableModel);
     }
+
 
     private void fileTableServiceSetup() {
         /// fileTableView
         this.fileTableModel = FXCollections.observableArrayList();
         TableColumn<Tuple<Integer, String>, String> fileDescColumn = new TableColumn<>("File descriptor");
         TableColumn<Tuple<Integer, String>, String> fileNameColumn = new TableColumn<>("File name");
-        fileDescColumn.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getFirst())));
-        fileNameColumn.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getSecond())));
+        fileDescColumn
+                .setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getFirst())));
+        fileNameColumn
+                .setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getSecond())));
 
         this.fileTableView.getColumns().setAll(fileDescColumn, fileNameColumn);
         this.fileTableView.setItems(this.fileTableModel);
@@ -138,16 +149,31 @@ public class Controller implements Services.Observer<PrgState> {
         this.heapTableModel = FXCollections.observableArrayList();
         TableColumn<Map.Entry<Integer, Integer>, String> heapAddrColumn = new TableColumn<>("Address");
         TableColumn<Map.Entry<Integer, Integer>, String> heapValueColumn = new TableColumn<>("Value");
-        heapAddrColumn.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getKey())));
-        heapValueColumn.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getValue())));
+        heapAddrColumn
+                .setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getKey())));
+        heapValueColumn
+                .setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getValue())));
         this.heapTableView.getColumns().setAll(heapAddrColumn, heapValueColumn);
         this.heapTableView.setItems(this.heapTableModel);
+    }
+
+    private void lockTableServiceSetup() {
+        // heapTableView
+        this.lockTableModel = FXCollections.observableArrayList();
+        TableColumn<Map.Entry<Integer, Integer>, String> lockAddrColumn = new TableColumn<>("Address");
+        TableColumn<Map.Entry<Integer, Integer>, String> lockValueColumn = new TableColumn<>("Value");
+        lockAddrColumn
+                .setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getKey())));
+        lockValueColumn
+                .setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getValue())));
+        this.lockTableView.getColumns().setAll(lockAddrColumn, lockValueColumn);
+        this.lockTableView.setItems(this.lockTableModel);
     }
 
     /////////////////////////////////////////////
 
     private Map<Integer, Integer> conservativeGarbageCollector(Collection<Integer> symTableValues,
-                                                               Map<Integer, Integer> heap) {
+            Map<Integer, Integer> heap) {
         return heap.entrySet().stream().filter(e -> symTableValues.contains(e.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
@@ -185,7 +211,7 @@ public class Controller implements Services.Observer<PrgState> {
             oneStepForAllPrg(prgList);
             repo.setPrgList(heapCleanup(prgList));
             prgList.forEach(prg -> repo.logPrgStateExec(prg));
-            //prgList = removeCompletedPrg(repo.getPrgList());
+            // prgList = removeCompletedPrg(repo.getPrgList());
         }
         closeBuffer(repo.getPrgList().get(0).getFileTable().getContent().values());
         repo.setPrgList(prgList);
@@ -225,7 +251,7 @@ public class Controller implements Services.Observer<PrgState> {
         prgList.addAll(newPrgList);
         repo.setPrgList(prgList);
 
-        //this.prgStateService.notifyObservers();
+        // this.prgStateService.notifyObservers();
     }
 
     private void closeBuffer(Collection<ITuple<String, BufferedReader>> values) {
@@ -282,11 +308,12 @@ public class Controller implements Services.Observer<PrgState> {
         List<PrgState> prgStates = this.prgStateService.getAll();
         if (prgStates != null) {
             this.prgStatesCnt.setText(String.valueOf(prgStates.size()));
-            //System.out.println(prgStates);
+            // System.out.println(prgStates);
             this.prgStateModel.setAll(prgStates);
             this.outListModel.setAll(this.prgStateService.getOutList());
             this.heapTableModel.setAll(this.prgStateService.getHeapList());
             this.fileTableModel.setAll(this.prgStateService.getFileList());
+            this.lockTableModel.setAll(this.prgStateService.getLockTableList());
             /// this we change
             PrgState current = prgStates.stream().filter(e -> e.getId() == Integer.valueOf(prgIdLabel.getText()))
                     .findFirst().orElse(null);

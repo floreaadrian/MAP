@@ -15,6 +15,14 @@ public class Repository implements IRepository {
 
     public Repository(PrgState e, String path) {
         this.prgList.add(e);
+        try {
+            PrintWriter writer = new PrintWriter(path);
+            writer.print("");
+            writer.close();
+        } catch (IOException ee) {
+            ee.getStackTrace();
+        }
+
         this.logFilePath = path;
     }
 
@@ -27,9 +35,9 @@ public class Repository implements IRepository {
         } catch (IOException e) {
             e.getStackTrace();
         }
-        for (PrgState aPrgList : prgList) aPrgList.reset();
+        for (PrgState aPrgList : prgList)
+            aPrgList.reset();
     }
-
 
     @Override
     public void logPrgStateExec(PrgState pr) {

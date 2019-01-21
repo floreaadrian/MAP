@@ -18,16 +18,18 @@ public class ForStmt implements IStmt {
     }
 
     @Override
-    public PrgState execute(PrgState state) throws DivisionByZero, VariableNotFound, OperatorNotFound, FileAlreadyUsed, FileDoesntExist, IOException, FileNotOpened {
+    public PrgState execute(PrgState state) throws DivisionByZero, VariableNotFound, OperatorNotFound, FileAlreadyUsed,
+            FileDoesntExist, IOException, FileNotOpened {
         this.initStmt.execute(state);
         IStmt whileFor = new WhileStmt(verfExp, new CompStmt(body, modfExp));
-        whileFor.execute(state);
+        // whileFor.execute(state);
+        state.getStk().push(whileFor);
         return null;
     }
 
     @Override
     public String toString() {
-        return "for(" + this.initStmt.toString() + "; " + this.verfExp.toString() + "; "
-                + this.modfExp.toString() + ") {\n" + this.body.toString() + "\n}";
+        return "for(" + this.initStmt.toString() + "; " + this.verfExp.toString() + "; " + this.modfExp.toString()
+                + ") {\n" + this.body.toString() + "\n}";
     }
 }

@@ -46,6 +46,13 @@
             <TableColumn prefWidth="75.0" text="Value" />
         </columns>
     </TableView>
+    <Label text="Lock table: " />
+    <TableView fx:id="lockTableView" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+            <TableColumn prefWidth="75.0" text="Symbol" />
+            <TableColumn prefWidth="75.0" text="Value" />
+        </columns>
+    </TableView>
     <Label text="Execution Stack:" />
     <ListView fx:id="exeStackListView" prefHeight="200.0" prefWidth="200.0" />
 
