@@ -37,8 +37,18 @@ public class MyList<T> implements MyIList<T> {
     }
 
     @Override
+    public boolean contain(T el) {
+        return this.list.contains(el);
+    }
+
+    @Override
     public int size() {
         return this.list.size();
+    }
+
+    @Override
+    public List toList() {
+        return this.list;
     }
 
 }

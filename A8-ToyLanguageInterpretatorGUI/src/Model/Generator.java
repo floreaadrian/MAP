@@ -2,12 +2,16 @@ package Model;
 
 public class Generator {
     private int generatedNumber;
-    public Generator(){
+
+    public Generator() {
         this.generatedNumber = 0;
     }
-    int getGeneratedNumber(){
-        this.generatedNumber++;
-        return this.generatedNumber;
+
+    int getGeneratedNumber() {
+        synchronized (this) {
+            this.generatedNumber++;
+            return this.generatedNumber;
+        }
     }
 
 }

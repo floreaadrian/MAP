@@ -30,11 +30,11 @@ public class Controller implements Services.Observer<PrgState> {
     @FXML
     private TableView<Map.Entry<Integer, Integer>> heapTableView;
     @FXML
-    private TableView<Map.Entry<Integer, Integer>> lockTableView;
-    @FXML
     private ListView<String> outListView;
     @FXML
     private TableView<Tuple<Integer, String>> fileTableView;
+    @FXML
+    private TableView<Tuple<Integer, Tuple<Integer, List<Integer>>>> barrierTableView;
     @FXML
     private ListView<PrgState> prgStateListView;
     @FXML
@@ -53,8 +53,8 @@ public class Controller implements Services.Observer<PrgState> {
     private ObservableList<PrgState> prgStateModel;
     private ObservableList<String> outListModel;
     private ObservableList<Map.Entry<Integer, Integer>> heapTableModel;
-    private ObservableList<Map.Entry<Integer, Integer>> lockTableModel;
     private ObservableList<Tuple<Integer, String>> fileTableModel;
+    private ObservableList<Tuple<Integer, Tuple<Integer, List<Integer>>>> barrierTableModel;
     private ObservableList<IStmt> exeStackModel;
     private PrgStateService prgStateService;
     private ObservableList<Tuple<String, Integer>> symTableModel;
@@ -87,7 +87,7 @@ public class Controller implements Services.Observer<PrgState> {
         heapServiceSetup();
         fileTableServiceSetup();
         symTableServiceSetup();
-        lockTableServiceSetup();
+        barrierTableServiceSetup();
         // outListView
         this.outListModel = FXCollections.observableArrayList();
         this.outListView.setItems(this.outListModel);
@@ -144,6 +144,26 @@ public class Controller implements Services.Observer<PrgState> {
         this.fileTableView.setItems(this.fileTableModel);
     }
 
+    private void barrierTableServiceSetup() {
+        /// barrier
+        this.barrierTableModel = FXCollections.observableArrayList();
+        TableColumn<Tuple<Integer, Tuple<Integer, List<Integer>>>, String> barrierIdxColumn = new TableColumn<>("Barrier index");
+        TableColumn<Tuple<Integer, Tuple<Integer, List<Integer>>>, String> barrierCntColum = new TableColumn<>("Barrier value");
+        TableColumn<Tuple<Integer, Tuple<Integer, List<Integer>>>, String> barrierArrColumn = new TableColumn<>("Barrier list of values");
+        barrierIdxColumn
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        String.valueOf(param.getValue().getFirst())));
+        barrierCntColum
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        String.valueOf(param.getValue().getSecond().getFirst())));
+        barrierArrColumn
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        String.valueOf(param.getValue().getSecond().getSecond().toString())));
+
+        this.barrierTableView.getColumns().setAll(barrierIdxColumn, barrierCntColum, barrierArrColumn);
+        this.barrierTableView.setItems(this.barrierTableModel);
+    }
+
     private void heapServiceSetup() {
         // heapTableView
         this.heapTableModel = FXCollections.observableArrayList();
@@ -157,23 +177,11 @@ public class Controller implements Services.Observer<PrgState> {
         this.heapTableView.setItems(this.heapTableModel);
     }
 
-    private void lockTableServiceSetup() {
-        // heapTableView
-        this.lockTableModel = FXCollections.observableArrayList();
-        TableColumn<Map.Entry<Integer, Integer>, String> lockAddrColumn = new TableColumn<>("Address");
-        TableColumn<Map.Entry<Integer, Integer>, String> lockValueColumn = new TableColumn<>("Value");
-        lockAddrColumn
-                .setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getKey())));
-        lockValueColumn
-                .setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getValue())));
-        this.lockTableView.getColumns().setAll(lockAddrColumn, lockValueColumn);
-        this.lockTableView.setItems(this.lockTableModel);
-    }
 
     /////////////////////////////////////////////
 
     private Map<Integer, Integer> conservativeGarbageCollector(Collection<Integer> symTableValues,
-            Map<Integer, Integer> heap) {
+                                                               Map<Integer, Integer> heap) {
         return heap.entrySet().stream().filter(e -> symTableValues.contains(e.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
@@ -230,8 +238,11 @@ public class Controller implements Services.Observer<PrgState> {
             prgList.forEach(prg -> this.repo.logPrgStateExec(prg));
             this.prgStateService.notifyObservers();
             this.repo.setPrgList(heapCleanup(prgList));
+        } else {
+            this.prgStateModel.setAll(new ArrayList<>());
+            this.onestepBTN.setDisable(true);
+            this.executor.shutdownNow();
         }
-
     }
 
     private void oneStepForAllPrg(List<PrgState> prgList) throws InterruptedException {
@@ -313,7 +324,7 @@ public class Controller implements Services.Observer<PrgState> {
             this.outListModel.setAll(this.prgStateService.getOutList());
             this.heapTableModel.setAll(this.prgStateService.getHeapList());
             this.fileTableModel.setAll(this.prgStateService.getFileList());
-            this.lockTableModel.setAll(this.prgStateService.getLockTableList());
+            this.barrierTableModel.setAll(this.prgStateService.getBarrierList());
             /// this we change
             PrgState current = prgStates.stream().filter(e -> e.getId() == Integer.valueOf(prgIdLabel.getText()))
                     .findFirst().orElse(null);

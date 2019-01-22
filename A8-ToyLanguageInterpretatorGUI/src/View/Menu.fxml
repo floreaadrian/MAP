@@ -46,8 +46,8 @@
             <TableColumn prefWidth="75.0" text="Value" />
         </columns>
     </TableView>
-    <Label text="Lock table: " />
-    <TableView fx:id="lockTableView" prefHeight="200.0" prefWidth="200.0">
+    <Label text="Barrier table: " />
+    <TableView fx:id="barrierTableView" prefHeight="200.0" prefWidth="200.0">
         <columns>
             <TableColumn prefWidth="75.0" text="Symbol" />
             <TableColumn prefWidth="75.0" text="Value" />

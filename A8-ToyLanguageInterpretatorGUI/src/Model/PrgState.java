@@ -12,6 +12,7 @@ public class PrgState {
     private MyIRandIntKeyDict<ITuple<String, BufferedReader>> fileTable;
     private MyIRandIntKeyDict<Integer> heap;
     private MyIRandIntKeyDict<Integer> lockTable;
+    private MyIRandIntKeyDict<ITuple<Integer, MyIList<Integer>>> barrierTable;
     private IStmt originalProgramState;
     private int id;
 
@@ -22,12 +23,13 @@ public class PrgState {
         this.fileTable.clear();
         this.heap.clear();
         this.lockTable.clear();
+        this.barrierTable.clear();
         this.exeStack.push(this.originalProgramState);
     }
 
     public PrgState(MyIStack<IStmt> stk, MyIDictionary<String, Integer> symtbl, MyIList<Integer> ot,
                     MyIRandIntKeyDict<ITuple<String, BufferedReader>> fileTable, MyIRandIntKeyDict<Integer> heap,
-                    MyIRandIntKeyDict<Integer> lockTable,
+                    MyIRandIntKeyDict<Integer> lockTable, MyIRandIntKeyDict<ITuple<Integer, MyIList<Integer>>> barrierTable,
                     IStmt prg, int id) {
         this.exeStack = stk;
         this.symTable = symtbl;
@@ -37,6 +39,7 @@ public class PrgState {
         this.fileTable = fileTable;
         this.heap = heap;
         this.lockTable = lockTable;
+        this.barrierTable = barrierTable;
         stk.push(prg);
     }
 
@@ -56,6 +59,11 @@ public class PrgState {
         return this.fileTable;
     }
 
+    public MyIRandIntKeyDict<ITuple<Integer, MyIList<Integer>>> getBarrierTable() {
+        return this.barrierTable;
+    }
+
+
     public MyIRandIntKeyDict<Integer> getHeap() {
         return this.heap;
     }
@@ -72,7 +80,7 @@ public class PrgState {
         return !this.exeStack.isEmpty();
     }
 
-    public PrgState oneStep() throws DivisionByZero, OperatorNotFound, FileDoesntExist, VariableNotFound, FileAlreadyUsed, FileNotOpened, IOException, MyStmtExecException {
+    public PrgState oneStep() throws DivisionByZero, OperatorNotFound, FileDoesntExist, VariableNotFound, FileAlreadyUsed, FileNotOpened, IOException, MyStmtExecException, BarrieDosentExist {
         if (this.exeStack.isEmpty()) throw new MyStmtExecException();
         IStmt crtStmt = this.exeStack.pop();
         return crtStmt.execute(this);
@@ -82,7 +90,8 @@ public class PrgState {
     public String toString() {
         return "\nId: " + this.id + "\nExeStack:\n" + this.exeStack.toString() + "SymTable:\n" + this.symTable.toString()
                 + "Heap:\n" + this.heap.toString() + "File Table:\n" + this.fileTable.toString()
-                + "Out:\n" + this.out.toString() + "\n" + multipleLines() + "\n";
+                + "Out:\n" + this.out.toString() + "BarrierTable:\n" + this.barrierTable.toString()
+                + multipleLines() + "\n";
     }
 
     private String multipleLines() {

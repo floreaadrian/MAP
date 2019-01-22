@@ -19,7 +19,7 @@ public class ForStmt implements IStmt {
 
     @Override
     public PrgState execute(PrgState state) throws DivisionByZero, VariableNotFound, OperatorNotFound, FileAlreadyUsed,
-            FileDoesntExist, IOException, FileNotOpened {
+            FileDoesntExist, IOException, FileNotOpened, BarrieDosentExist {
         this.initStmt.execute(state);
         IStmt whileFor = new WhileStmt(verfExp, new CompStmt(body, modfExp));
         // whileFor.execute(state);

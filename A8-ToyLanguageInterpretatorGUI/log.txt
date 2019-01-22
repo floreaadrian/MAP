@@ -1,58 +1,97 @@
 
 Id: 1
 ExeStack:
-a=2+3*5
-(b=a+1; print(b)) 
+v=1
+(fork(v=2); fork(v=3)) 
 SymTable:
 Heap:
 File Table:
 Out:
-
+BarrierTable:
 ---------------
 
 Id: 1
 ExeStack:
-(b=a+1; print(b)) 
+(fork(v=2); fork(v=3)) 
 SymTable:
-a --> 17
+v --> 1
 Heap:
 File Table:
 Out:
-
+BarrierTable:
 ---------------
 
 Id: 1
 ExeStack:
-b=a+1
-print(b)
+fork(v=2)
+fork(v=3)
 SymTable:
-a --> 17
+v --> 1
 Heap:
 File Table:
 Out:
-
+BarrierTable:
 ---------------
 
 Id: 1
 ExeStack:
-print(b)
+fork(v=3)
 SymTable:
-a --> 17
-b --> 18
+v --> 1
 Heap:
 File Table:
 Out:
+BarrierTable:
+---------------
 
+Id: 10
+ExeStack:
+v=2
+SymTable:
+v --> 1
+Heap:
+File Table:
+Out:
+BarrierTable:
 ---------------
 
 Id: 1
 ExeStack:
 SymTable:
-a --> 17
-b --> 18
+v --> 1
 Heap:
 File Table:
 Out:
-18
+BarrierTable:
+---------------
 
+Id: 10
+ExeStack:
+SymTable:
+v --> 2
+Heap:
+File Table:
+Out:
+BarrierTable:
+---------------
+
+Id: 20
+ExeStack:
+v=3
+SymTable:
+v --> 1
+Heap:
+File Table:
+Out:
+BarrierTable:
+---------------
+
+Id: 20
+ExeStack:
+SymTable:
+v --> 3
+Heap:
+File Table:
+Out:
+BarrierTable:
 ---------------

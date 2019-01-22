@@ -36,12 +36,18 @@ public class PrgStateService implements Observable<PrgState> {
         return mList;
     }
 
-    public List<Map.Entry<Integer, Integer>> getHeapList() {
-        return new ArrayList<>(repo.getPrgList().get(0).getHeap().getContent().entrySet());
+    public List<Tuple<Integer, Tuple<Integer, List<Integer>>>> getBarrierList() {
+        List<Tuple<Integer, Tuple<Integer, List<Integer>>>> tempList = new ArrayList<>();
+        PrgState state = this.repo.getPrgList().get(0);
+        for (Integer x : state.getBarrierTable().keys()) {
+            tempList.add(new Tuple<>(x, new Tuple<>(state.getBarrierTable().lookup(x).getFirst(),
+                    state.getBarrierTable().lookup(x).getSecond().toList())));
+        }
+        return tempList;
     }
 
-    public List<Map.Entry<Integer, Integer>> getLockTableList() {
-        return new ArrayList<>(repo.getPrgList().get(0).getLockTable().getContent().entrySet());
+    public List<Map.Entry<Integer, Integer>> getHeapList() {
+        return new ArrayList<>(repo.getPrgList().get(0).getHeap().getContent().entrySet());
     }
 
     @Override
